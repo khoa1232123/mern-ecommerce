@@ -2,6 +2,7 @@ const express = require('express');
 const { requireSignin, adminMiddleware } = require('../common-middleware');
 const router = express.Router();
 const { createProduct } = require('../controller/product');
+
 const multer = require('multer');
 const shortid = require('shortid');
 const path = require('path');
