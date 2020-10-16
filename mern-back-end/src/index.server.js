@@ -1,8 +1,9 @@
 const express = require('express');
 const env = require('dotenv');
 const app = express();
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const path = require('path');
+const cors = require('cors');
 
 // routes
 const authRoutes = require('./routes/auth');
@@ -27,9 +28,9 @@ mongoose
     console.log('Database connected');
   });
 
-// app.use(bodyParser());
+app.use(cors());
 app.use(express.json());
-
+app.use('/public', express.static(path.join(__dirname, 'uploads')));
 app.use('/api', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/category', categoryRoutes);

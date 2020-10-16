@@ -1,0 +1,3 @@
+-- console hiển thị biến state
+window.store.getState()
+
