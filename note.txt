@@ -1,3 +1,6 @@
 -- console hiển thị biến state
 window.store.getState()
 
+-- xóa localStorage
+window.localStorage.clear()
+

@@ -1,14 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import Input from '../../components/UI/Input';
-import { login } from '../../redux/actions';
-import { useDispatch } from 'react-redux';
+import { isUserLoggedIn, login } from '../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 const Signin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!auth.authenticate) {
+      dispatch(isUserLoggedIn());
+    }
+  }, []);
 
   const userLogin = (e) => {
     e.preventDefault();
@@ -18,6 +26,11 @@ const Signin = () => {
     };
     dispatch(login(user));
   };
+
+  if (auth.authenticate) {
+    return <Redirect to={'/'} />;
+  }
+
   return (
     <Container>
       <Row>

@@ -7,3 +7,16 @@ div[class*='col-'] {
   padding-left: 10px;
   padding-right: 10px;
 }
+.sidebar {
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: #eee;
+  padding-top: 60px;
+  box-shadow: inset 0 0 2px gray;
+}
+.main-content {
+  margin-left: auto;
+}

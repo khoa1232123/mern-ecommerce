@@ -46,7 +46,8 @@ exports.signin = (req, res) => {
             expiresIn: '1h',
           }
         );
-        const { firstName, lastName, email, role, fullName } = user;
+        const { _id, firstName, lastName, email, role, fullName } = user;
+        res.cookie('token', token, { expiresIn: '1h' });
         res.status(200).json({
           token,
           user: {
@@ -68,10 +69,9 @@ exports.signin = (req, res) => {
   });
 };
 
-exports.requireSignin = (req, res, next) => {
-  const token = req.headers.authorization.split(' ')[1];
-  const user = jwt.verify(token, process.env.JWT_SECRET);
-  req.user = user;
-  next();
-  // jwt.decode();
+exports.signout = (req, res) => {
+  res.clearCookie('token');
+  res.status(200).json({
+    message: 'Signout successfully...!',
+  });
 };
