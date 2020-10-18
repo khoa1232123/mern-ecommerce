@@ -11,27 +11,27 @@ const Header = () => {
     dispatch(signout());
   };
 
-  const renderLogInLinks = () => {
-    if (auth.authenticate) {
-      return (
-        <Nav>
-          <span className="btn btn-secondary mr-2" onClick={logout}>
-            Sign Out
-          </span>
-        </Nav>
-      );
-    } else {
-      return (
-        <Nav>
-          <NavLink to="/signin" className="btn btn-secondary mr-2">
-            Signin
-          </NavLink>
-          <NavLink to="/signup" className="btn btn-secondary">
-            Signup
-          </NavLink>
-        </Nav>
-      );
-    }
+  const renderLoggedInLinks = () => {
+    return (
+      <Nav>
+        <span className="btn btn-secondary mr-2" onClick={logout}>
+          Sign Out
+        </span>
+      </Nav>
+    );
+  };
+
+  const renderNonLoggedInLinks = () => {
+    return (
+      <Nav>
+        <NavLink to="/signin" className="btn btn-secondary mr-2">
+          Signin
+        </NavLink>
+        <NavLink to="/signup" className="btn btn-secondary">
+          Signup
+        </NavLink>
+      </Nav>
+    );
   };
   return (
     <Navbar
@@ -40,6 +40,7 @@ const Header = () => {
       bg="dark"
       variant="dark"
       style={{ zIndex: 2 }}
+      sticky="top"
     >
       <Navbar.Brand href="#home">Admin Dashboard</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -59,7 +60,7 @@ const Header = () => {
             </NavDropdown.Item>
           </NavDropdown> */}
         </Nav>
-        {renderLogInLinks()}
+        {auth.authenticate ? renderLoggedInLinks() : renderNonLoggedInLinks()}
       </Navbar.Collapse>
     </Navbar>
   );

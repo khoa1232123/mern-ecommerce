@@ -1,4 +1,4 @@
-import { userTypes } from '../types';
+import { authTypes } from '../types';
 
 const initState = {
   token: null,
@@ -9,24 +9,39 @@ const initState = {
     picture: '',
   },
   authenticate: false,
+  authenticating: false,
   loading: false,
+  error: null,
+  message: '',
 };
 
 export default (state = initState, action) => {
   console.log(action);
   switch (action.type) {
-    case userTypes.USER_REGISTER_REQUEST:
+    case authTypes.LOGIN_REQUEST:
+      return {
+        ...state,
+        authenticating: true,
+      };
+    case authTypes.LOGIN_SUCCESS:
+      return {
+        ...state,
+        user: action.payload.user,
+        token: action.payload.token,
+        authenticate: true,
+        authenticating: false,
+      };
+    case authTypes.LOGOUT_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case userTypes.USER_REGISTER_SUCCESS:
+    case authTypes.LOGOUT_SUCCESS:
       return {
         ...state,
         loading: false,
-        message: action.payload.message,
       };
-    case userTypes.USER_REGISTER_FAILURE:
+    case authTypes.LOGOUT_FAILURE:
       return {
         ...state,
         loading: false,
