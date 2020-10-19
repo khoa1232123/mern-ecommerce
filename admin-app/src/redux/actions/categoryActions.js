@@ -14,7 +14,10 @@ export const getAllCategory = () => {
         },
       });
     } else {
-      dispatch({ type: categoryTypes.GET_ALL_CATEGORIES_FAILURE });
+      dispatch({
+        type: categoryTypes.GET_ALL_CATEGORIES_FAILURE,
+        payload: { error: res.data.error },
+      });
     }
   };
 };
