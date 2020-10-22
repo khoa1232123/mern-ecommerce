@@ -22,7 +22,7 @@ const Sidebar = ({ children }) => {
             </li>
           </ul>
         </Col>
-        <Col md={10} className="main-content">
+        <Col md={10} className="main-content mt-4">
           {children}
         </Col>
       </Row>

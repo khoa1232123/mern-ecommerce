@@ -6,17 +6,41 @@ const initState = {
   error: null,
 };
 
-const buildNewCategories = (categories, category) => {
+const buildNewCategories = (parentId, categories, category) => {
   let myCategories = [];
   for (let cat of categories) {
-    myCategories.push({
-      ...cat,
-      children:
-        cat.children && cat.children.length > 0
-          ? buildNewCategories(cat.children, category)
-          : [],
-    });
+    if (cat._id === parentId) {
+      myCategories.push({
+        ...cat,
+        children:
+          cat.children && cat.children.length > 0
+            ? buildNewCategories(
+                parentId,
+                [
+                  ...cat.children,
+                  {
+                    _id: category._id,
+                    name: category.name,
+                    slug: category.slug,
+                    parentId: category.parentId,
+                    children: category.children,
+                  },
+                ],
+                category
+              )
+            : [],
+      });
+    } else {
+      myCategories.push({
+        ...cat,
+        children:
+          cat.children && cat.children.length > 0
+            ? buildNewCategories(parentId, cat.children, category)
+            : [],
+      });
+    }
   }
+  return myCategories;
 };
 
 export default (state = initState, action) => {
@@ -43,15 +67,19 @@ export default (state = initState, action) => {
         loading: true,
       };
     case categoryTypes.ADD_NEW_CATEGORY_SUCCESS:
+      // const category = action.payload.category;
+      // const updateCat = buildNewCategories(
+      //   category.parentId,
+      //   state.categories,
+      //   category
+      // );
+      // console.log(updateCat);
       return {
         ...state,
-        categories: buildNewCategories(
-          state.categories,
-          action.payload.categories
-        ),
+        // categories: updateCat,
         loading: false,
       };
-    case categoryTypes.GET_ALL_CATEGORIES_FAILURE:
+    case categoryTypes.ADD_NEW_CATEGORY_FAILURE:
       return {
         ...state,
         error: action.payload.error,

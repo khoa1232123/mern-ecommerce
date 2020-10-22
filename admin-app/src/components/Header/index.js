@@ -14,7 +14,7 @@ const Header = () => {
   const renderLoggedInLinks = () => {
     return (
       <Nav>
-        <span className="btn btn-secondary mr-2" onClick={logout}>
+        <span className="btn btn-secondary" onClick={logout}>
           Sign Out
         </span>
       </Nav>
