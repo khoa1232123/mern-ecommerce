@@ -1,18 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../../components/UI/Input';
 import Modal from '../../../components/UI/Modal';
 
-const AddCatForm = ({ show, handleClose, setConCat, categories }) => {
+const AddCatForm = ({ show, setShow, addCategory }) => {
   const [catName, setCatName] = useState('');
   const [catImage, setCatImage] = useState('');
   const [parentCatId, setParentCatId] = useState('');
-  useEffect(() => {
-    setConCat({
-      name: catName,
-      parentCatId: catImage,
-      catImage: parentCatId,
-    });
-  }, [catName, catImage, parentCatId]);
+  const dispatch = useDispatch();
+  const category = useSelector((state) => state.category);
+
+  const handleClose = () => {
+    const form = new FormData();
+    form.append('name', catName);
+    form.append('parentId', parentCatId);
+    form.append('categoryImage', catImage);
+    dispatch(addCategory(form));
+    setCatImage('');
+    setCatName('');
+    setParentCatId('');
+    setShow(false);
+  };
 
   const handleCatImage = (e) => {
     setCatImage(e.target.files[0]);
@@ -43,7 +51,7 @@ const AddCatForm = ({ show, handleClose, setConCat, categories }) => {
         onChange={(e) => setParentCatId(e.target.value)}
       >
         <option>Select option</option>
-        {createCategoryList(categories).map((option) => (
+        {createCategoryList(category.categories).map((option) => (
           <option key={option.value} value={option.value}>
             {option.name}
           </option>

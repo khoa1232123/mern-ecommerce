@@ -1,23 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import Input from '../../components/UI/Input';
-import Modal from '../../components/UI/Modal';
-import { addCategory, getAllCategory } from '../../redux/actions';
+import { useSelector } from 'react-redux';
+import { addCategory } from '../../redux/actions';
 import AddCatForm from './AddCatForm';
 
 const Category = () => {
   const [show, setShow] = useState(false);
   const category = useSelector((state) => state.category);
-  const [conCat, setConCat] = useState({
-    name: '',
-    parentCatId: '',
-    catImage: '',
-  });
-  const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(getAllCategory());
-  // }, [getAllCategory]);
 
   const renderCategories = (categories) => {
     let newCategories = [];
@@ -32,21 +21,6 @@ const Category = () => {
       );
     }
     return newCategories;
-  };
-
-  const handleClose = () => {
-    const form = new FormData();
-    form.append('name', conCat.name);
-    form.append('parentId', conCat.parentCatId);
-    form.append('categoryImage', conCat.catImage);
-    dispatch(addCategory(form));
-    console.log(conCat);
-    setConCat({
-      name: '',
-      parentCatId: '',
-      catImage: '',
-    });
-    setShow(false);
   };
 
   const handleShow = () => {
@@ -68,12 +42,7 @@ const Category = () => {
           </Col>
         </Row>
       </Container>
-      <AddCatForm
-        show={show}
-        setConCat={setConCat}
-        categories={category.categories}
-        handleClose={handleClose}
-      />
+      <AddCatForm show={show} setShow={setShow} addCategory={addCategory} />
     </>
   );
 };
