@@ -35,7 +35,8 @@ const buildNewCategories = (parentId, categories, category) => {
         ...cat,
         children:
           cat.children && cat.children.length > 0
-            ? buildNewCategories(parentId, cat.children, category)
+            ? // eslint-disable-next-line no-unused-vars
+              buildNewCategories(parentId, cat.children, category)
             : [],
       });
     }
@@ -43,6 +44,7 @@ const buildNewCategories = (parentId, categories, category) => {
   return myCategories;
 };
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default (state = initState, action) => {
   switch (action.type) {
     case categoryTypes.GET_ALL_CATEGORIES_REQUEST:

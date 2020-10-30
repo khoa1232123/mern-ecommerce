@@ -8,7 +8,7 @@ const MenuHeader = () => {
 
   useEffect(() => {
     dispatch(getAllCategory());
-  }, [dispatch]);
+  });
 
   console.log(category);
 
@@ -20,7 +20,7 @@ const MenuHeader = () => {
           {category.parentId ? (
             <a href={category.slug}>{category.name}</a>
           ) : (
-            <a href={category.slug}>{category.name}</a>
+            <span>{category.name}</span>
           )}
 
           {category.children.length > 0 ? (
