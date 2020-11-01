@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../../components/UI/Input';
 import Modal from '../../../components/UI/Modal';
 
-const AddCatForm = ({ show, setShow, addCategory }) => {
+const AddCatForm = ({ show, setShow, addCategory, createCategoryList }) => {
   const [catName, setCatName] = useState('');
   const [catImage, setCatImage] = useState('');
   const [parentCatId, setParentCatId] = useState('');
@@ -24,16 +24,6 @@ const AddCatForm = ({ show, setShow, addCategory }) => {
 
   const handleCatImage = (e) => {
     setCatImage(e.target.files[0]);
-  };
-
-  const createCategoryList = (categories, options = []) => {
-    for (let category of categories) {
-      options.push({ value: category._id, name: category.name });
-      if (category.children.length > 0) {
-        createCategoryList(category.children, options);
-      }
-    }
-    return options;
   };
 
   return (
@@ -57,6 +47,14 @@ const AddCatForm = ({ show, setShow, addCategory }) => {
           </option>
         ))}
       </select>
+
+      <select className="form-control">
+        <option value="">Select Type</option>
+        <option value="store">store</option>
+        <option value="product">product</option>
+        <option value="page">page</option>
+      </select>
+
       <input type="file" name="catImage" onChange={handleCatImage} />
     </Modal>
   );

@@ -7,12 +7,13 @@ const Input = ({
   placeholder,
   errorMessage,
   value,
+  showLabel,
   onChange,
   ...props
 }) => {
   return (
     <Form.Group controlId={label}>
-      <Form.Label>{label}</Form.Label>
+      {showLabel ? <Form.Label>{label}</Form.Label> : null}
       <Form.Control
         type={type}
         placeholder={placeholder}

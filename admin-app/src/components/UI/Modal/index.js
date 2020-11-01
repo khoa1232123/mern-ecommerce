@@ -6,11 +6,12 @@ const FormModal = ({
   show,
   handleClose,
   children,
+  onHide,
   size,
   ...props
 }) => {
   return (
-    <Modal size={size} show={show} onHide={handleClose}>
+    <Modal size={size} show={show} onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>{modalTitle}</Modal.Title>
       </Modal.Header>
