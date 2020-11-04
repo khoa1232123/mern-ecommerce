@@ -65,7 +65,7 @@ const UpdateCatForm = ({
       <h2>Expanded</h2>
       {expandedArray.length > 0 &&
         expandedArray.map((item, index) => (
-          <Row>
+          <Row key={index}>
             <Col>
               <Input
                 value={item.name}
@@ -111,10 +111,11 @@ const UpdateCatForm = ({
             </Col>
           </Row>
         ))}
+
       <h2>Check</h2>
       {checkedArray.length > 0 &&
         checkedArray.map((item, index) => (
-          <Row>
+          <Row key={index}>
             <Col>
               <Input
                 value={item.name}

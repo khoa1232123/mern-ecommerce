@@ -7,6 +7,7 @@ const FormModal = ({
   handleClose,
   children,
   onHide,
+  buttons,
   size,
   ...props
 }) => {
@@ -17,9 +18,17 @@ const FormModal = ({
       </Modal.Header>
       <Modal.Body>{children}</Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={handleClose}>
-          Save Changes
-        </Button>
+        {buttons ? (
+          buttons.map((btn, index) => (
+            <Button key={index} variant={btn.color} onClick={btn.onClick}>
+              {btn.label}
+            </Button>
+          ))
+        ) : (
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        )}
       </Modal.Footer>
     </Modal>
   );

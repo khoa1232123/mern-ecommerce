@@ -10,4 +10,18 @@ const axiosIntance = axios.create({
   },
 });
 
+axiosIntance.interceptors.request.use((req) => {
+  return req;
+});
+
+axiosIntance.interceptors.response.use(
+  (res) => {
+    return res;
+  },
+  (error) => {
+    console.log(error.response);
+    return Promise.reject(error);
+  }
+);
+
 export default axiosIntance;

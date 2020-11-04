@@ -94,3 +94,18 @@ exports.updateCategories = async (req, res) => {
   }
   res.status(200).json({ body: req.body });
 };
+
+exports.deleteCategories = async (req, res) => {
+  const { ids } = req.body.payload;
+  const deleteCats = [];
+  for (let i = 0; i < ids.length; i++) {
+    const deleteCat = await Category.findOneAndDelete({ _id: ids[i]._id });
+    deleteCats.push(deleteCat);
+  }
+
+  if (deleteCats.length == ids.length) {
+    res.status(201).json({ message: 'Categories removed' });
+  } else {
+    res.status(400).json({ message: 'Something went wrong' });
+  }
+};

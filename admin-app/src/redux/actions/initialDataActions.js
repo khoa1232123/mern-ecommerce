@@ -18,6 +18,5 @@ export const getInitialData = () => {
         payload: { products },
       });
     }
-    console.log(res);
   };
 };

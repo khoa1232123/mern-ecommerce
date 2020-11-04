@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { addCategory } from '../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCategory, deleteCategories } from '../../redux/actions';
 import AddCatForm from './AddCatForm';
 import UpdateCatForm from './UpdateCatForm';
 import CheckboxTree from 'react-checkbox-tree';
@@ -16,6 +16,7 @@ import {
   IoMdSquareOutline,
 } from 'react-icons/io';
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
+import DeleteCatForm from './DeleteCatForm';
 
 const Category = () => {
   const [show, setShow] = useState(false);
@@ -25,7 +26,8 @@ const Category = () => {
   const [checkedArray, setCheckedArray] = useState([]);
   const [expandedArray, setExpandedArray] = useState([]);
   const [updateCategoryModal, setUpdateCategoryModal] = useState(false);
-  const [updateCategory, setUpdateCategory] = useState(false);
+  const [deleteCategoryModal, setDeleteCategoryModal] = useState(false);
+  const dispatch = useDispatch();
 
   const renderCategories = (categories) => {
     let newCategories = [];
@@ -54,8 +56,7 @@ const Category = () => {
     setShow(true);
   };
 
-  const openUpdateCategoryForm = () => {
-    setUpdateCategoryModal(true);
+  const updateCheckedAndExpandedCat = () => {
     setCheckedArray([]);
     setExpandedArray([]);
     const checkedArray2 = [];
@@ -83,6 +84,27 @@ const Category = () => {
       categories,
       expandedArray2,
       checkedArray2,
+    });
+  };
+
+  const openUpdateCategoryForm = () => {
+    updateCheckedAndExpandedCat();
+    setUpdateCategoryModal(true);
+  };
+
+  const openDeleteCategoryForm = () => {
+    updateCheckedAndExpandedCat();
+    setDeleteCategoryModal(true);
+  };
+
+  const handleDeleteCategories = () => {
+    const checkedIdsArray = checkedArray.map((item) => ({ _id: item.value }));
+    // const expandedIdsArray = expandedArray.map((item) => ({ _id: item.value }));
+    // const idsArray = expandedIdsArray.concat(checkedIdsArray);
+    setDeleteCategoryModal(false);
+    dispatch(deleteCategories(checkedIdsArray)).then((result) => {
+      if (result) {
+      }
     });
   };
 
@@ -121,7 +143,11 @@ const Category = () => {
         </Row>
         <Row>
           <Col>
-            <Button variant="danger" className="mr-2">
+            <Button
+              variant="danger"
+              className="mr-2"
+              onClick={openDeleteCategoryForm}
+            >
               Delete
             </Button>
             <Button variant="warning" onClick={openUpdateCategoryForm}>
@@ -145,6 +171,26 @@ const Category = () => {
         checkedArray={checkedArray}
         setCheckedArray={setCheckedArray}
         setExpandedArray={setExpandedArray}
+      />
+      <DeleteCatForm
+        show={deleteCategoryModal}
+        setShow={setDeleteCategoryModal}
+        expandedArray={expandedArray}
+        checkedArray={checkedArray}
+        buttons={[
+          {
+            label: 'No',
+            color: 'danger',
+            onClick: () => {
+              alert('yes');
+            },
+          },
+          {
+            label: 'Yes',
+            color: 'primary',
+            onClick: handleDeleteCategories,
+          },
+        ]}
       />
     </>
   );
