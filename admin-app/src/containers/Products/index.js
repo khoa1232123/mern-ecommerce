@@ -85,7 +85,7 @@ const Products = () => {
                   </td>
                   <td>{product.price}</td>
                   <td>{product.quantity}</td>
-                  <td>{product.category.name}</td>
+                  <td>{product.category ? product.category.name : null}</td>
                   <td>test</td>
                 </tr>
               ))
@@ -97,7 +97,12 @@ const Products = () => {
 
   const renderFormAddProduct = () => {
     return (
-      <Modal modalTitle="Add New Product" show={show} handleClose={handleClose}>
+      <Modal
+        modalTitle="Add New Product"
+        show={show}
+        handleClose={handleClose}
+        onHide={() => setShow(false)}
+      >
         <Input
           value={name}
           placeholder="Product Name"
@@ -170,6 +175,7 @@ const Products = () => {
         handleClose={closeProductDetailModal}
         modalTitle={'Product Detail'}
         size="lg"
+        onHide={() => setShow(false)}
       >
         <Row>
           <Col md="3">

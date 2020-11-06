@@ -49,13 +49,16 @@ export const addCategory = (form) => {
 
 export const updatedCategories = (form) => {
   return async (dispatch) => {
-    // dispatch({ type: categoryTypes.ADD_NEW_CATEGORY_REQUEST });
+    dispatch({ type: categoryTypes.UPDATE_CATEGORIES_REQUEST });
     const res = await axios.post('/category/update', form);
     if (res.status === 201) {
       dispatch(getAllCategory());
-      console.log(res);
+      dispatch({ type: categoryTypes.UPDATE_CATEGORIES_SUCCESS });
     } else {
-      console.log(res);
+      dispatch({
+        type: categoryTypes.UPDATE_CATEGORIES_FAILURE,
+        payload: { error: res.data.error },
+      });
     }
   };
 };

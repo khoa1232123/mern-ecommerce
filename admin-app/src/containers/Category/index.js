@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCategory, deleteCategories } from '../../redux/actions';
 import AddCatForm from './AddCatForm';
 import UpdateCatForm from './UpdateCatForm';
 import CheckboxTree from 'react-checkbox-tree';
@@ -97,17 +96,6 @@ const Category = () => {
     setDeleteCategoryModal(true);
   };
 
-  const handleDeleteCategories = () => {
-    const checkedIdsArray = checkedArray.map((item) => ({ _id: item.value }));
-    // const expandedIdsArray = expandedArray.map((item) => ({ _id: item.value }));
-    // const idsArray = expandedIdsArray.concat(checkedIdsArray);
-    setDeleteCategoryModal(false);
-    dispatch(deleteCategories(checkedIdsArray)).then((result) => {
-      if (result) {
-      }
-    });
-  };
-
   return (
     <>
       <Container fluid>
@@ -115,7 +103,21 @@ const Category = () => {
           <Col md={12}>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <h3>Category</h3>
-              <Button onClick={handleShow}>Add</Button>
+              <Col className="text-right">
+                <Button onClick={handleShow} className="mr-2">
+                  Add
+                </Button>
+                <Button
+                  variant="danger"
+                  className="mr-2"
+                  onClick={openDeleteCategoryForm}
+                >
+                  Delete
+                </Button>
+                <Button variant="warning" onClick={openUpdateCategoryForm}>
+                  Edit
+                </Button>
+              </Col>
             </div>
           </Col>
           <Col md={12}>
@@ -141,25 +143,10 @@ const Category = () => {
             />
           </Col>
         </Row>
-        <Row>
-          <Col>
-            <Button
-              variant="danger"
-              className="mr-2"
-              onClick={openDeleteCategoryForm}
-            >
-              Delete
-            </Button>
-            <Button variant="warning" onClick={openUpdateCategoryForm}>
-              Edit
-            </Button>
-          </Col>
-        </Row>
       </Container>
       <AddCatForm
         show={show}
         setShow={setShow}
-        addCategory={addCategory}
         createCategoryList={createCategoryList}
       />
       <UpdateCatForm
@@ -177,20 +164,6 @@ const Category = () => {
         setShow={setDeleteCategoryModal}
         expandedArray={expandedArray}
         checkedArray={checkedArray}
-        buttons={[
-          {
-            label: 'No',
-            color: 'danger',
-            onClick: () => {
-              alert('yes');
-            },
-          },
-          {
-            label: 'Yes',
-            color: 'primary',
-            onClick: handleDeleteCategories,
-          },
-        ]}
       />
     </>
   );

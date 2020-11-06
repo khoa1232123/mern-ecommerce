@@ -6,42 +6,42 @@ const initState = {
   error: null,
 };
 
-const buildNewCategories = (parentId, categories, category) => {
-  let myCategories = [];
-  for (let cat of categories) {
-    if (cat._id === parentId) {
-      myCategories.push({
-        ...cat,
-        children:
-          cat.children && cat.children.length > 0
-            ? buildNewCategories(
-                parentId,
-                [
-                  ...cat.children,
-                  {
-                    _id: category._id,
-                    name: category.name,
-                    slug: category.slug,
-                    parentId: category.parentId,
-                    children: category.children,
-                  },
-                ],
-                category
-              )
-            : [],
-      });
-    } else {
-      myCategories.push({
-        ...cat,
-        children:
-          cat.children && cat.children.length > 0
-            ? buildNewCategories(parentId, cat.children, category)
-            : [],
-      });
-    }
-  }
-  return myCategories;
-};
+// const buildNewCategories = (parentId, categories, category) => {
+//   let myCategories = [];
+//   for (let cat of categories) {
+//     if (cat._id === parentId) {
+//       myCategories.push({
+//         ...cat,
+//         children:
+//           cat.children && cat.children.length > 0
+//             ? buildNewCategories(
+//                 parentId,
+//                 [
+//                   ...cat.children,
+//                   {
+//                     _id: category._id,
+//                     name: category.name,
+//                     slug: category.slug,
+//                     parentId: category.parentId,
+//                     children: category.children,
+//                   },
+//                 ],
+//                 category
+//               )
+//             : [],
+//       });
+//     } else {
+//       myCategories.push({
+//         ...cat,
+//         children:
+//           cat.children && cat.children.length > 0
+//             ? buildNewCategories(parentId, cat.children, category)
+//             : [],
+//       });
+//     }
+//   }
+//   return myCategories;
+// };
 
 export default (state = initState, action) => {
   switch (action.type) {
@@ -82,6 +82,22 @@ export default (state = initState, action) => {
     case categoryTypes.ADD_NEW_CATEGORY_FAILURE:
       return {
         ...state,
+        error: action.payload.error,
+      };
+    case categoryTypes.UPDATE_CATEGORIES_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case categoryTypes.UPDATE_CATEGORIES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case categoryTypes.UPDATE_CATEGORIES_FAILURE:
+      return {
+        ...state,
+        loading: false,
         error: action.payload.error,
       };
     default:

@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../../components/UI/Input';
 import Modal from '../../../components/UI/Modal';
+import { addCategory } from '../../../redux/actions';
 
-const AddCatForm = ({ show, setShow, addCategory, createCategoryList }) => {
+const AddCatForm = ({ show, setShow, createCategoryList }) => {
   const [catName, setCatName] = useState('');
   const [catImage, setCatImage] = useState('');
   const [parentCatId, setParentCatId] = useState('');
