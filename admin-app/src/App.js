@@ -12,6 +12,7 @@ import { getInitialData, isUserLoggedIn } from './redux/actions';
 import Products from './containers/Products';
 import Orders from './containers/Orders';
 import Category from './containers/Category';
+import Page from './containers/Page';
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function App() {
         <Switch>
           <PrivateRoute path="/" exact component={Home} />
           <PrivateRoute path="/category" component={Category} />
+          <PrivateRoute path="/page" component={Page} />
           <PrivateRoute path="/products" component={Products} />
           <PrivateRoute path="/orders" component={Orders} />
           <Route path="/signin" exact component={Signin} />

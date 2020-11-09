@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../../components/UI/Input';
 import Modal from '../../../components/UI/Modal';
 import { addCategory } from '../../../redux/actions';
+import { linearCategories } from '../../../helpers/categories';
 
-const AddCatForm = ({ show, setShow, createCategoryList }) => {
+const AddCatForm = ({ show, setShow }) => {
   const [catName, setCatName] = useState('');
   const [catImage, setCatImage] = useState('');
   const [parentCatId, setParentCatId] = useState('');
@@ -42,7 +43,7 @@ const AddCatForm = ({ show, setShow, createCategoryList }) => {
         onChange={(e) => setParentCatId(e.target.value)}
       >
         <option>Select option</option>
-        {createCategoryList(category.categories).map((option) => (
+        {linearCategories(category.categories).map((option) => (
           <option key={option.value} value={option.value}>
             {option.name}
           </option>

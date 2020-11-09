@@ -100,6 +100,24 @@ export default (state = initState, action) => {
         loading: false,
         error: action.payload.error,
       };
+
+    case categoryTypes.DELETE_CATEGORIES_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case categoryTypes.DELETE_CATEGORIES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case categoryTypes.DELETE_CATEGORIES_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+
     default:
       return state;
   }

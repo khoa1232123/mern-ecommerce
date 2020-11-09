@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../../components/UI/Input';
 import Modal from '../../../components/UI/Modal';
+import { linearCategories } from '../../../helpers/categories';
 import { updatedCategories } from '../../../redux/actions';
 
 const UpdateCatForm = ({
   show,
   setShow,
-  createCategoryList,
   expandedArray,
   checkedArray,
   setExpandedArray,
   setCheckedArray,
 }) => {
-  const [catName, setCatName] = useState('');
-  const [catImage, setCatImage] = useState('');
-  const [parentCatId, setParentCatId] = useState('');
+  // const [catName, setCatName] = useState('');
+  // const [catImage, setCatImage] = useState('');
+  // const [parentCatId, setParentCatId] = useState('');
   const dispatch = useDispatch();
   const category = useSelector((state) => state.category);
 
@@ -26,29 +26,31 @@ const UpdateCatForm = ({
       form.append('_id', item.value);
       form.append('name', item.name);
       form.append('parentId', item.parentId ? item.parentId : '');
+      form.append('type', item.type);
     });
     checkedArray.forEach((item, index) => {
       form.append('_id', item.value);
       form.append('name', item.name);
       form.append('parentId', item.parentId ? item.parentId : '');
+      form.append('type', item.type);
     });
     dispatch(updatedCategories(form));
     setShow(false);
   };
 
-  const handleCatImage = (e) => {
-    setCatImage(e.target.files[0]);
-  };
+  // const handleCatImage = (e) => {
+  //   setCatImage(e.target.files[0]);
+  // };
 
   const handleCategoryInput = (key, value, index, type) => {
     if (type === 'checked') {
       const updatedCheckedArray = checkedArray.map((item, _index) =>
-        index == _index ? { ...item, [key]: value } : item
+        index === _index ? { ...item, [key]: value } : item
       );
       setCheckedArray(updatedCheckedArray);
     } else if (type === 'expanded') {
       const updatedExpandedArray = expandedArray.map((item, _index) =>
-        index == _index ? { ...item, [key]: value } : item
+        index === _index ? { ...item, [key]: value } : item
       );
       setExpandedArray(updatedExpandedArray);
     }
@@ -73,7 +75,7 @@ const UpdateCatForm = ({
                 placeholder="Category Name"
                 label="Category Name"
                 onChange={(e) =>
-                  handleCategoryInput('name', e.target.value, index, 'checked')
+                  handleCategoryInput('name', e.target.value, index, 'expanded')
                 }
               />
             </Col>
@@ -86,12 +88,12 @@ const UpdateCatForm = ({
                     'parentId',
                     e.target.value,
                     index,
-                    'checked'
+                    'expanded'
                   )
                 }
               >
                 <option>Select option</option>
-                {createCategoryList(category.categories).map((option) => (
+                {linearCategories(category.categories).map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.name}
                   </option>
@@ -99,15 +101,18 @@ const UpdateCatForm = ({
               </select>
             </Col>
             <Col>
-              <select className="form-control mb-3">
+              <select
+                className="form-control mb-3"
+                value={item.type}
+                onChange={(e) =>
+                  handleCategoryInput('type', e.target.value, index, 'expanded')
+                }
+              >
                 <option value="">Select Type</option>
                 <option value="store">store</option>
                 <option value="product">product</option>
                 <option value="page">page</option>
               </select>
-            </Col>
-            <Col>
-              <input type="file" name="catImage" onChange={handleCatImage} />
             </Col>
           </Row>
         ))}
@@ -141,7 +146,7 @@ const UpdateCatForm = ({
                 }
               >
                 <option>Select option</option>
-                {createCategoryList(category.categories).map((option) => (
+                {linearCategories(category.categories).map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.name}
                   </option>
@@ -149,15 +154,18 @@ const UpdateCatForm = ({
               </select>
             </Col>
             <Col>
-              <select className="form-control mb-3">
+              <select
+                className="form-control mb-3"
+                value={item.type}
+                onChange={(e) =>
+                  handleCategoryInput('type', e.target.value, index, 'checked')
+                }
+              >
                 <option value="">Select Type</option>
                 <option value="store">store</option>
                 <option value="product">product</option>
                 <option value="page">page</option>
               </select>
-            </Col>
-            <Col>
-              <input type="file" name="catImage" onChange={handleCatImage} />
             </Col>
           </Row>
         ))}

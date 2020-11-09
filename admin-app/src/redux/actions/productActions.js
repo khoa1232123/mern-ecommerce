@@ -1,4 +1,4 @@
-import axios from '../../helpers';
+import axios from '../../helpers/axios';
 
 export const addProduct = (form) => {
   return async (dispatch) => {

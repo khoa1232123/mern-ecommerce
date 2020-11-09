@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Col, Container, Row, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../components/UI/Input';
-import { getAllCategory } from '../../redux/actions';
 import { addProduct } from '../../redux/actions/productActions';
 import Modal from '../../components/UI/Modal';
 import { generatePublicUrl } from '../../urlConfig';
@@ -227,6 +226,7 @@ const Products = () => {
                 <div key={index} className="productImgContent">
                   <img
                     src={generatePublicUrl(picture.img)}
+                    alt="product"
                     style={{
                       width: '100%',
                     }}

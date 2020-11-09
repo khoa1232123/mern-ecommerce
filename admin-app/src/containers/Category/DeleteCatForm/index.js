@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Modal from '../../../components/UI/Modal';
 import { deleteCategories } from '../../../redux/actions';
 

@@ -1,4 +1,4 @@
-import axios from '../../helpers';
+import axios from '../../helpers/axios';
 import { userTypes } from '../types';
 
 export const signup = (user) => {

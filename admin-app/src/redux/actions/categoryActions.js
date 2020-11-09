@@ -1,4 +1,4 @@
-import axios from '../../helpers';
+import axios from '../../helpers/axios';
 import { categoryTypes } from '../types';
 
 export const getAllCategory = () => {
@@ -65,19 +65,20 @@ export const updatedCategories = (form) => {
 
 export const deleteCategories = (ids) => {
   return async (dispatch, getState) => {
-    // dispatch({ type: categoryTypes.ADD_NEW_CATEGORY_REQUEST });
+    dispatch({ type: categoryTypes.DELETE_CATEGORIES_REQUEST });
     const res = await axios.post('/category/delete', {
       payload: {
         ids,
       },
     });
-    dispatch(getAllCategory());
-    console.log(res);
-    console.log('aaa');
-    // if (res.status === 201) {
-    //   dispatch(getAllCategory());
-    // } else {
-    //   console.log(res);
-    // }
+    if (res.status === 201) {
+      dispatch({ type: categoryTypes.DELETE_CATEGORIES_SUCCESS });
+      dispatch(getAllCategory());
+    } else {
+      dispatch({
+        type: categoryTypes.DELETE_CATEGORIES_FAILURE,
+        payload: { error: res.data.error },
+      });
+    }
   };
 };

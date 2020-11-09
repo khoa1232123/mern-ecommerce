@@ -15,6 +15,7 @@ function createCategories(categories, parentId = null) {
       name: cate.name,
       slug: cate.slug,
       parentId: cate.parentId,
+      type: cate.type,
       children: createCategories(categories, cate._id),
     });
   }
@@ -49,7 +50,6 @@ exports.getCategories = (req, res) => {
     if (error) return res.status(400).json({ error });
     if (categories) {
       const categoryList = createCategories(categories);
-
       return res.status(200).json({ categoryList });
     }
   });
@@ -92,7 +92,6 @@ exports.updateCategories = async (req, res) => {
     );
     res.status(201).json({ updatedCategory });
   }
-  res.status(200).json({ body: req.body });
 };
 
 exports.deleteCategories = async (req, res) => {

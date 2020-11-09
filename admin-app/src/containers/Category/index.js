@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import AddCatForm from './AddCatForm';
 import UpdateCatForm from './UpdateCatForm';
 import CheckboxTree from 'react-checkbox-tree';
@@ -16,6 +16,7 @@ import {
 } from 'react-icons/io';
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 import DeleteCatForm from './DeleteCatForm';
+import { linearCategories } from '../../helpers/categories';
 
 const Category = () => {
   const [show, setShow] = useState(false);
@@ -26,7 +27,7 @@ const Category = () => {
   const [expandedArray, setExpandedArray] = useState([]);
   const [updateCategoryModal, setUpdateCategoryModal] = useState(false);
   const [deleteCategoryModal, setDeleteCategoryModal] = useState(false);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const renderCategories = (categories) => {
     let newCategories = [];
@@ -41,16 +42,6 @@ const Category = () => {
     return newCategories;
   };
 
-  const createCategoryList = (categories, options = []) => {
-    for (let category of categories) {
-      options.push({ value: category._id, name: category.name });
-      if (category.children.length > 0) {
-        createCategoryList(category.children, options);
-      }
-    }
-    return options;
-  };
-
   const handleShow = () => {
     setShow(true);
   };
@@ -60,7 +51,7 @@ const Category = () => {
     setExpandedArray([]);
     const checkedArray2 = [];
     const expandedArray2 = [];
-    const categories = createCategoryList(category.categories);
+    const categories = linearCategories(category.categories);
     checked.length > 0 &&
       checked.forEach((categoryId, index) => {
         const category = categories.find(
@@ -78,11 +69,7 @@ const Category = () => {
     setCheckedArray(checkedArray2);
     setExpandedArray(expandedArray2);
     console.log({
-      checked,
-      expanded,
       categories,
-      expandedArray2,
-      checkedArray2,
     });
   };
 
@@ -144,16 +131,11 @@ const Category = () => {
           </Col>
         </Row>
       </Container>
-      <AddCatForm
-        show={show}
-        setShow={setShow}
-        createCategoryList={createCategoryList}
-      />
+      <AddCatForm show={show} setShow={setShow} />
       <UpdateCatForm
         show={updateCategoryModal}
         setShow={setUpdateCategoryModal}
         updateCategory={openUpdateCategoryForm}
-        createCategoryList={createCategoryList}
         expandedArray={expandedArray}
         checkedArray={checkedArray}
         setCheckedArray={setCheckedArray}
