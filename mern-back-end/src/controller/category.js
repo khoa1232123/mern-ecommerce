@@ -64,7 +64,7 @@ exports.updateCategories = async (req, res) => {
         name: name[i],
         type: type[i],
       };
-      if (parentId !== '') {
+      if (parentId[i] !== '') {
         category.parentId = parentId[i];
       }
       const updatedCategory = await Category.findOneAndUpdate(

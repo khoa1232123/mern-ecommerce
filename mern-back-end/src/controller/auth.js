@@ -41,7 +41,7 @@ exports.signin = (req, res) => {
     if (error) return res.status(400).json({ error });
     console.log(user);
     if (user) {
-      if (user.authenticate(req.body.password)) {
+      if (user.authenticate(req.body.password) && user.role === 'user') {
         const token = jwt.sign(
           { _id: user._id, role: user.role },
           process.env.JWT_SECRET,
@@ -62,7 +62,7 @@ exports.signin = (req, res) => {
         });
       } else {
         return res.status(400).json({
-          message: 'Invalid Password',
+          message: 'Something went wrong',
         });
       }
     } else {

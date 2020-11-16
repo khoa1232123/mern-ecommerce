@@ -1,4 +1,4 @@
-import axios from '../../helpers/axios';
+import axios from '../../helpers';
 import { authTypes } from '../types';
 
 export const login = (user) => {
@@ -6,7 +6,7 @@ export const login = (user) => {
     dispatch({
       type: authTypes.LOGIN_REQUEST,
     });
-    const res = await axios.post(`/admin/signin`, {
+    const res = await axios.post(`/user/signin`, {
       ...user,
     });
     console.log(res);
@@ -58,6 +58,7 @@ export const signout = () => {
     dispatch({
       type: authTypes.LOGOUT_SUCCESS,
     });
+
     const res = await axios.post('/admin/signout');
     if (res.status === 200) {
     } else {

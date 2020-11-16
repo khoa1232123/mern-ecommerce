@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCategory } from '../../redux/actions';
+import { Link } from 'react-router-dom';
+import { getAllCategory } from '../../../redux/actions';
 
 const MenuHeader = () => {
   const category = useSelector((state) => state.category);
@@ -8,9 +9,7 @@ const MenuHeader = () => {
 
   useEffect(() => {
     dispatch(getAllCategory());
-  });
-
-  console.log(category);
+  }, [dispatch]);
 
   const renderCategories = (categories) => {
     let newCategories = [];
@@ -18,9 +17,17 @@ const MenuHeader = () => {
       newCategories.push(
         <li key={category._id}>
           {category.parentId ? (
-            <a href={category.slug}>{category.name}</a>
+            <Link
+              to={`/${category.slug}?cid=${category._id}&type=${category.type}`}
+            >
+              {category.name}
+            </Link>
           ) : (
-            <span>{category.name}</span>
+            <Link
+              to={`/${category.slug}?cid=${category._id}&type=${category.type}`}
+            >
+              {category.name}
+            </Link>
           )}
 
           {category.children.length > 0 ? (
