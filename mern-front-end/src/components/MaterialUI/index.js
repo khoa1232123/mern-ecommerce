@@ -65,7 +65,7 @@ const MaterialInput = (props) => {
 
 const MaterialButton = ({ title, styleBtn, onClick, ...props }) => {
   return (
-    <div style={{ width: '90%' }}>
+    <div style={{ width: '90%' }} {...props}>
       <button className="materialButton" style={styleBtn} onClick={onClick}>
         {title}
       </button>

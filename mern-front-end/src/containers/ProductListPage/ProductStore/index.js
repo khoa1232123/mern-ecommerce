@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Card from '../../../components/UI/Card';
 import { getProductsByCat } from '../../../redux/actions';
 import { generatePublicUrl } from '../../../urlConfig';
 
@@ -21,16 +22,14 @@ const ProductStore = (props) => {
   }, [dispatch, props]);
 
   return (
-    <>
+    <div className="container-fluid mt-4">
       {Object.keys(product.productsByPrice).map((key, index) => {
         return (
-          <div className="card">
-            <div className="cardHeader">
-              <div>
-                {props.match.params.slug} mobile under {priceRange[key]}
-              </div>
-              <button>view all</button>
-            </div>
+          <Card
+            headerLeft={`${props.match.params.slug} mobile under ${priceRange[key]}`}
+            headerRight={<button className="btn btn-primary">view all</button>}
+            style={{ marginTop: '15px' }}
+          >
             <div className="cardBody">
               {product.productsByPrice[key].map((product) => (
                 <div className="productContainer">
@@ -55,10 +54,10 @@ const ProductStore = (props) => {
                 </div>
               ))}
             </div>
-          </div>
+          </Card>
         );
       })}
-    </>
+    </div>
   );
 };
 

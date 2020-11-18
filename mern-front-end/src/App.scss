@@ -63,6 +63,9 @@
     }
   }
 }
+.flexRow {
+  display: flex;
+}
 .card {
   width: calc(100%);
   border: 1px solid #ebebeb;
