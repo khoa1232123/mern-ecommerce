@@ -5,7 +5,7 @@ import ProductListPage from './containers/ProductListPage';
 import Layout from './components/Layout';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { isUserLoggedIn } from './redux/actions';
+import { isUserLoggedIn, updateCart } from './redux/actions';
 import ProductDetailsPage from './containers/ProductDetailsPage';
 import CartPage from './containers/CartPage';
 
@@ -13,8 +13,10 @@ function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   useEffect(() => {
+    dispatch(isUserLoggedIn());
     if (auth.authenticate) {
-      dispatch(isUserLoggedIn());
+      console.log('abc');
+      dispatch(updateCart());
     }
   }, [dispatch, auth.authenticate]);
 

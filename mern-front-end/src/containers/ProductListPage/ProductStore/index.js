@@ -26,13 +26,14 @@ const ProductStore = (props) => {
       {Object.keys(product.productsByPrice).map((key, index) => {
         return (
           <Card
+            key={index}
             headerLeft={`${props.match.params.slug} mobile under ${priceRange[key]}`}
             headerRight={<button className="btn btn-primary">view all</button>}
             style={{ marginTop: '15px' }}
           >
             <div className="cardBody">
-              {product.productsByPrice[key].map((product) => (
-                <div className="productContainer">
+              {product.productsByPrice[key].map((product, index) => (
+                <div key={index} className="productContainer">
                   <div className="productImg">
                     <Link to={`/${product.slug}/${product._id}/p`}>
                       <img

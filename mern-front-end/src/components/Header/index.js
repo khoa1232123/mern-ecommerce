@@ -12,6 +12,7 @@ import {
 import MenuHeader from './MenuHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, signout } from '../../redux/actions';
+import { Link } from 'react-router-dom';
 
 const Header = (props) => {
   const [loginModal, setLoginModal] = useState(false);
@@ -53,7 +54,12 @@ const Header = (props) => {
             { label: 'Rewards', href: '', icon: null },
             { label: 'Notifications', href: '', icon: null },
             { label: 'Gift cards', href: '', icon: null },
-            { label: 'Logout', href: '', icon: null, onClick: signout },
+            {
+              label: 'Logout',
+              href: '',
+              icon: null,
+              onClick: () => dispatch(signout()),
+            },
           ]}
           firstMenu={
             <div className="firstmenu">
@@ -191,10 +197,12 @@ const Header = (props) => {
           {/* end more menu */}
           {/* cart */}
           <div>
-            <span className="cart">
+            {/* <span className="cart"> */}
+            <Link to="/cart" className="cart">
               <IoIosCart />
               <span style={{ margin: '0 10px' }}>Cart</span>
-            </span>
+            </Link>
+            {/* </span> */}
           </div>
           {/* end cart */}
         </div>

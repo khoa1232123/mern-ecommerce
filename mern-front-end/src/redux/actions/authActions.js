@@ -1,5 +1,5 @@
 import axios from '../../helpers';
-import { authTypes } from '../types';
+import { authTypes, cartTypes } from '../types';
 
 export const login = (user) => {
   return async (dispatch) => {
@@ -54,18 +54,24 @@ export const isUserLoggedIn = () => {
 export const signout = () => {
   return async (dispatch) => {
     dispatch({ type: authTypes.LOGOUT_REQUEST });
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     localStorage.clear();
+    console.log('abc signout');
     dispatch({
       type: authTypes.LOGOUT_SUCCESS,
     });
+    dispatch({
+      type: cartTypes.RESET_CART,
+    });
 
-    const res = await axios.post('/admin/signout');
-    if (res.status === 200) {
-    } else {
-      dispatch({
-        type: authTypes.LOGOUT_FAILURE,
-        payload: { error: res.data.error },
-      });
-    }
+    // const res = await axios.post('/admin/signout');
+    // if (res.status === 200) {
+    // } else {
+    //   dispatch({
+    //     type: authTypes.LOGOUT_FAILURE,
+    //     payload: { error: res.data.error },
+    //   });
+    // }
   };
 };

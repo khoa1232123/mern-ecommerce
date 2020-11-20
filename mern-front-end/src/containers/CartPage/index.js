@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '../../components/UI/Card';
-import { updateCart } from '../../redux/actions/cartActions';
+import { getCartItems } from '../../redux/actions';
 import CartItem from './CartItem';
 import './style.css';
 
 const CartPage = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
+  const auth = useSelector((state) => state.auth);
   const { cartItems } = cart;
   useEffect(() => {
-    dispatch(updateCart());
-  }, [dispatch]);
+    if (auth.authenticate) {
+      dispatch(getCartItems());
+    }
+  }, [dispatch, auth]);
 
   const totalPrice = () => {
     let total = 0;

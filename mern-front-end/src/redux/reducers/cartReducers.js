@@ -1,27 +1,36 @@
 import { cartTypes } from '../types';
 
 const initialState = {
-  cartItems: {
-    // 123: {
-    //   _id: 123,
-    //   name: 'sam sung s50',
-    //   img: 'SVGZoomEvent.jpg',
-    //   price: 2000,
-    //   qty: 1,
-    // },
-  },
+  cartItems: {},
+  loading: false,
+  error: null,
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (state = initialState, action) => {
   switch (action.type) {
-    case cartTypes.ADD_TO_CART:
+    case cartTypes.ADD_TO_CART_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case cartTypes.ADD_TO_CART_SUCCESS:
       console.log('add to cart');
       return {
         ...state,
         cartItems: action.payload.cartItems,
+        loading: false,
       };
-
+    case cartTypes.ADD_TO_CART_FAILURE:
+      return {
+        ...state,
+        error: action.payload.error,
+        loading: false,
+      };
+    case cartTypes.RESET_CART:
+      return {
+        ...initialState,
+      };
     default:
       return state;
   }
