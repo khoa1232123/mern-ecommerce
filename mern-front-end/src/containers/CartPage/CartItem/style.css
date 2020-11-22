@@ -23,14 +23,10 @@
   max-height: 100%;
   object-fit: contain;
 }
-.cartProductContainer {
-  flex: 1;
-}
 .cartItemDetails {
   display: flex;
   justify-content: space-between;
-  flex: 4;
-  margin-left: 20px;
+  flex: 1;
 }
 
 .cartActionBtn {

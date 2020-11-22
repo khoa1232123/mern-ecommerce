@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { isUserLoggedIn, updateCart } from './redux/actions';
 import ProductDetailsPage from './containers/ProductDetailsPage';
 import CartPage from './containers/CartPage';
+import CheckoutPage from './containers/CheckoutPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function App() {
             component={ProductDetailsPage}
           />
           <Route path="/cart" component={CartPage} />
+          <Route path="/checkout" component={CheckoutPage} />
           <Route path="/:slug" component={ProductListPage} />
         </Switch>
       </Layout>

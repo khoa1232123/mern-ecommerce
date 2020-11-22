@@ -1,5 +1,5 @@
 // import { getCartItems } from '../../../../mern-back-end/src/controller/cart';
-import axios from '../../helpers';
+import axios from '../../helpers/axios';
 import { cartTypes } from '../types';
 // import store from '../store';
 

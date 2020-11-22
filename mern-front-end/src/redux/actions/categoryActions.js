@@ -1,4 +1,4 @@
-import axios from '../../helpers';
+import axios from '../../helpers/axios';
 import { categoryTypes } from '../types';
 
 export const getAllCategory = () => {

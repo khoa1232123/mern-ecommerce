@@ -66,6 +66,9 @@
 .flexRow {
   display: flex;
 }
+.sb {
+  justify-content: space-between;
+}
 .card {
   width: calc(100%);
   border: 1px solid #ebebeb;

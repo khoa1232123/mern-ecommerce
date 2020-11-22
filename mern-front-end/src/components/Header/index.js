@@ -22,7 +22,6 @@ const Header = (props) => {
   const dispatch = useDispatch();
 
   const userLogin = () => {
-    console.log('abc');
     dispatch(login({ email, password }));
   };
 
@@ -32,14 +31,12 @@ const Header = (props) => {
     }
   }, [auth.authenticate]);
 
-  console.log(auth);
-
   const renderLogInMenu = () => {
     if (auth.authenticate) {
       return (
         <DropdownMenu
           menu={
-            <span className=" fullName" onClick={() => setLoginModal(true)}>
+            <span className=" fullName">
               {auth.user.firstName} {auth.user.lastName}
             </span>
           }
