@@ -34,6 +34,13 @@ export default (state = initialState, { type, payload }) => {
     case userTypes.ADD_USER_ADDRESS_SUCCESS:
       return {
         ...state,
+        address: payload.address,
+      };
+    case userTypes.ADD_USER_ADDRESS_FAILURE:
+      return {
+        ...state,
+        error: payload.error,
+        loading: false,
       };
     default:
       return state;

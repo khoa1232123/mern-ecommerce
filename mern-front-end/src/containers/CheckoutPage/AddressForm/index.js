@@ -185,7 +185,7 @@ const AddressForm = (props) => {
                 id="addressType-home"
                 className="mr-1"
               />
-              <label for="addressType-home">Home</label>
+              <label htmlFor="addressType-home">Home</label>
             </div>
             <div>
               <input
@@ -196,7 +196,7 @@ const AddressForm = (props) => {
                 id="addressType-work"
                 className="mr-1"
               />
-              <label for="addressType-work">Work</label>
+              <label htmlFor="addressType-work">Work</label>
             </div>
           </div>
         </div>

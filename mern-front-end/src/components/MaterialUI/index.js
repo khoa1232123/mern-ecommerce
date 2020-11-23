@@ -65,7 +65,7 @@ const MaterialInput = (props) => {
 
 const MaterialButton = ({ title, styleBtn, onClick, style, ...props }) => {
   return (
-    <div style={{ width: '90%', style }} {...props}>
+    <div style={{ width: '100%', ...style }} {...props}>
       <button className="materialButton" style={styleBtn} onClick={onClick}>
         {title}
       </button>
@@ -101,4 +101,12 @@ const DropdownMenu = (props) => {
   );
 };
 
-export { Modal, MaterialInput, MaterialButton, DropdownMenu };
+const Anchor = ({ name, ...props }) => {
+  return (
+    <button {...props} name="anchorButton btn btn-warning">
+      {name}
+    </button>
+  );
+};
+
+export { Modal, MaterialInput, MaterialButton, DropdownMenu, Anchor };

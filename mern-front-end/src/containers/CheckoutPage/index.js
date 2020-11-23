@@ -1,20 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { MaterialButton, MaterialInput } from '../../components/MaterialUI';
+import { MaterialInput } from '../../components/MaterialUI';
+import PriceDetails from '../../components/PriceDetails';
 import { getAddress } from '../../redux/actions';
+import CartPage from '../CartPage';
+import Address from './Address';
 import AddressForm from './AddressForm';
 import './style.css';
 
-const CheckoutStep = (props) => {
+const CheckoutStep = ({
+  active,
+  stepNumber,
+  title,
+  body,
+  onClick,
+  ...props
+}) => {
   return (
     <div className="checkoutStep">
-      <div className={`checkoutHeader ${props.active && 'active'}`}>
+      <div className={`checkoutHeader ${active && 'active'}`} onClick={onClick}>
         <div>
-          <span className="stepNumber">{props.stepNumber}</span>
-          <span className="stepTitle">{props.title}</span>
+          <span className="stepNumber">{stepNumber}</span>
+          <span className="stepTitle">{title}</span>
         </div>
       </div>
-      {props.body && props.body}
+      {body && body}
     </div>
   );
 };
@@ -22,13 +32,52 @@ const CheckoutStep = (props) => {
 const CheckoutPage = (props) => {
   const user = useSelector((state) => state.user);
   const auth = useSelector((state) => state.auth);
+  const [newAddress, setNewAddress] = useState(false);
+  const [address, setAddress] = useState([]);
+  const [confirmAddress, setConfirmAddress] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [orderSummary, setOrderSummary] = useState(false);
   const dispatch = useDispatch();
 
-  const onAddressSubmit = () => {};
+  const onAddressSubmit = (addr) => {
+    setSelectedAddress(addr);
+    setConfirmAddress(true);
+  };
+
+  const selectAddress = (addr) => {
+    const updatedAddress = address.map((adr) =>
+      adr._id === addr._id
+        ? { ...adr, selected: true }
+        : { ...adr, selected: false }
+    );
+    setAddress(updatedAddress);
+  };
+
+  const confirmDeliveryAddress = (addr) => {
+    setSelectedAddress(addr);
+    setConfirmAddress(true);
+    setOrderSummary(true);
+  };
+
+  const enableAddressEditForm = (addr) => {
+    const updatedAddress = address.map((adr) =>
+      adr._id === addr._id ? { ...adr, edit: true } : { ...adr, edit: false }
+    );
+    setAddress(updatedAddress);
+  };
 
   useEffect(() => {
-    dispatch(getAddress());
-  }, [dispatch]);
+    auth.authenticate && dispatch(getAddress());
+  }, [auth.authenticate, dispatch]);
+
+  useEffect(() => {
+    const value = user.address.map((adr) => ({
+      ...adr,
+      selected: false,
+      edit: false,
+    }));
+    setAddress(value);
+  }, [user.address]);
 
   return (
     <div className="cartContainer" style={{ alignItems: 'flex-start' }}>
@@ -36,7 +85,7 @@ const CheckoutPage = (props) => {
         <CheckoutStep
           stepNumber={'1'}
           title={'Login'}
-          active={auth.authenticate}
+          active={!auth.authenticate}
           body={
             auth.authenticate ? (
               <div className="loggedInId">
@@ -53,38 +102,47 @@ const CheckoutPage = (props) => {
         <CheckoutStep
           stepNumber={'2'}
           title={'Delivery address'}
-          active={false}
+          active={!confirmAddress}
           // eslint-disable-next-line array-callback-return
-          body={user.address.map((adr, index) => {
-            return (
-              <div key={index} className="flexRow addressContainer">
-                <div>
-                  <input type="radio" name="address" />
-                </div>
-                <div className="flexRow sb addressinfo">
-                  <div>
-                    <div>
-                      <span>{adr.name}</span>
-                      <span>{adr.addressType}</span>
-                      <span>{adr.mobileNumber}</span>
-                    </div>
-                    <div>{adr.address}</div>
-                    <MaterialButton
-                      title={'Delivery Here'}
-                      style={{
-                        width: '250px',
-                      }}
-                    />
-                  </div>
-                  <div>Edit</div>
-                </div>
-              </div>
-            );
-          })}
+          body={
+            confirmAddress ? (
+              <div>{`${selectedAddress.address} - ${selectedAddress.pinCode}`}</div>
+            ) : (
+              address.map((adr, index) => (
+                <Address
+                  key={index}
+                  selectAddress={selectAddress}
+                  enableAddressEditForm={enableAddressEditForm}
+                  confirmDeliveryAddress={confirmDeliveryAddress}
+                  onAddressSubmit={onAddressSubmit}
+                  adr={adr}
+                />
+              ))
+            )
+          }
         />
-        <AddressForm onSubmitForm={onAddressSubmit} onCancel={() => {}} />
+
+        {confirmAddress ? null : newAddress ? (
+          <AddressForm onSubmitForm={onAddressSubmit} onCancel={() => {}} />
+        ) : (
+          <CheckoutStep
+            stepNumber="+"
+            title="ADD NEW ADDRESS"
+            active={false}
+            onClick={() => setNewAddress(!newAddress)}
+          />
+        )}
+
+        <CheckoutStep
+          stepNumber={'3'}
+          title={'Order summary'}
+          active={orderSummary}
+          body={orderSummary ? <CartPage onlyCartItems={true} /> : null}
+        />
+
         <CheckoutStep stepNumber={'3'} title={'Order summary'} />
       </div>
+      <PriceDetails />
     </div>
   );
 };
