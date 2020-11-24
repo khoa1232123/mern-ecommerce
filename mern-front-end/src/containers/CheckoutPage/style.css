@@ -11,6 +11,7 @@
   width: 100%;
   box-sizing: border-box;
   padding: 10px 20px;
+  border-bottom: 1px solid #ebebeb;
 }
 .checkoutHeader.active {
   background: #2874f0;
@@ -40,13 +41,11 @@
 }
 .loggedInId {
   font-size: 12px;
-  margin: 0px 0 10px 60px;
 }
 
 .addressContainer {
   box-sizing: border-box;
   padding: 20px;
-  background: #f5faff;
 }
 .addressinfo {
   padding-left: 15px;
@@ -79,4 +78,7 @@
   font-size: 12px;
   letter-spacing: 1px;
   line-height: 18px;
+}
+.checkoutBody {
+  padding: 20px;
 }
