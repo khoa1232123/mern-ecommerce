@@ -4,6 +4,7 @@ const initialState = {
   address: [],
   error: null,
   loading: false,
+  orders: [],
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -37,6 +38,23 @@ export default (state = initialState, { type, payload }) => {
         address: payload.address,
       };
     case userTypes.ADD_USER_ADDRESS_FAILURE:
+      return {
+        ...state,
+        error: payload.error,
+        loading: false,
+      };
+    case userTypes.GET_USER_ORDER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case userTypes.GET_USER_ORDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        orders: payload.orders,
+      };
+    case userTypes.GET_USER_ORDER_FAILURE:
       return {
         ...state,
         error: payload.error,

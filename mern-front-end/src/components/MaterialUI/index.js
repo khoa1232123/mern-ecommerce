@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './style.css';
+import { Link } from 'react-router-dom';
 
 /**
  * @author Rizwan Khan
@@ -73,26 +74,29 @@ const MaterialButton = ({ title, styleBtn, onClick, style, ...props }) => {
   );
 };
 
-const DropdownMenu = (props) => {
+const DropdownMenu = ({ menu, firstMenu, menus, ...props }) => {
   return (
     <div className="headerDropdownContainer">
-      {props.menu}
+      {menu}
       <div className="dropdown">
         <div className="upArrow"></div>
-        {props.firstMenu}
+        {firstMenu}
         <ul className="headerDropdownMenu">
-          {props.menus &&
-            props.menus.map((item, index) => (
+          {menus &&
+            menus.map((item, index) => (
               <li key={index}>
-                <a
-                  onClick={(e) => {
-                    e.preventDefault();
-                    item.onClick && item.onClick();
-                  }}
-                  href={item.href}
-                >
-                  {item.label}
-                </a>
+                {item.onClick ? (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      item.onClick && item.onClick();
+                    }}
+                  >
+                    {item.label}
+                  </button>
+                ) : (
+                  <Link to={item.href}>{item.label}</Link>
+                )}
               </li>
             ))}
         </ul>
@@ -109,4 +113,20 @@ const Anchor = ({ name, ...props }) => {
   );
 };
 
-export { Modal, MaterialInput, MaterialButton, DropdownMenu, Anchor };
+const Breed = ({ breed, breedIcon, ...props }) => {
+  return (
+    <div className="breed">
+      <ul>
+        {breed &&
+          breed.map((item, index) => (
+            <li key={index}>
+              <a href={item.href}>{item.name}</a>
+              {breedIcon}
+            </li>
+          ))}
+      </ul>
+    </div>
+  );
+};
+
+export { Modal, MaterialInput, MaterialButton, DropdownMenu, Anchor, Breed };

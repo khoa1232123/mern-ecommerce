@@ -1,5 +1,6 @@
 import React from 'react';
 import getParams from '../../utils/getParams';
+import ClothingAndAccessories from './ClothingAndAccessories';
 import ProductPage from './ProductPage';
 import ProductStore from './ProductStore';
 
@@ -14,7 +15,7 @@ const ProductListPage = (props) => {
       case 'page':
         return <ProductPage {...props} />;
       default:
-        return;
+        return <ClothingAndAccessories {...props} />;
     }
   };
 

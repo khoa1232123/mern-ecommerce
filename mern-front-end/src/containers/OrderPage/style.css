@@ -1,0 +1,21 @@
+.orderItemContainer {
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+}
+.orderImgContainer {
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  text-align: center;
+}
+.orderImg {
+  max-width: 120px;
+  height: 120px;
+}
+
+.orderContent {
+  width: 100%;
+  align-items: center;
+  padding: 0px 10px;
+}

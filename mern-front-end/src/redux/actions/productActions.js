@@ -5,7 +5,6 @@ export const getProductsByCat = (slug) => {
   return async (dispatch) => {
     const res = await axios.get(`/product/getproductsbycat/${slug}`);
     if (res.status === 200) {
-      console.log(res.data);
       dispatch({
         type: productTypes.GET_PRODUCTS_BY_CAT,
         payload: res.data,
@@ -20,7 +19,6 @@ export const getProductPage = ({ cid, type }) => {
     try {
       dispatch({ type: productTypes.GET_PRODUCT_PAGE_REQUEST });
       const res = await axios.get(`/page/${cid}/${type}`);
-      console.log(res);
       if (res.status === 200) {
         dispatch({
           type: productTypes.GET_PRODUCT_PAGE_SUCCESS,
@@ -45,7 +43,6 @@ export const getProductDetailsById = ({ productId }) => {
     console.log(productId);
     try {
       res = await axios.get(`/product/${productId}`);
-      console.log(res);
       if (res.status === 200) {
         dispatch({
           type: productTypes.GET_PRODUCT_DETAILS_BY_ID_SUCCESS,
