@@ -1,5 +1,10 @@
 import axios from '../../helpers/axios';
-import { categoryTypes, initialDataTypes, productTypes } from '../types';
+import {
+  categoryTypes,
+  initialDataTypes,
+  orderTypes,
+  productTypes,
+} from '../types';
 
 export const getInitialData = () => {
   return async (dispatch) => {
@@ -8,7 +13,7 @@ export const getInitialData = () => {
     });
     const res = await axios.post('/initialdata');
     if (res.status === 200) {
-      const { categories, products } = res.data;
+      const { categories, products, orders } = res.data;
       dispatch({
         type: categoryTypes.GET_ALL_CATEGORIES_SUCCESS,
         payload: { categories },
@@ -16,6 +21,10 @@ export const getInitialData = () => {
       dispatch({
         type: productTypes.GET_ALL_PRODUCTS_SUCCESS,
         payload: { products },
+      });
+      dispatch({
+        type: orderTypes.GET_CUSTOMER_ORDER_SUCCESS,
+        payload: { orders },
       });
     }
   };
