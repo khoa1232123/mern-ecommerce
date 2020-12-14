@@ -16,6 +16,9 @@ import { Link } from 'react-router-dom';
 
 const Header = (props) => {
   const [loginModal, setLoginModal] = useState(false);
+  const [signup, setSignup] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const auth = useSelector((state) => state.auth);
@@ -72,9 +75,17 @@ const Header = (props) => {
       return (
         <DropdownMenu
           menu={
-            <span className="loginButton" onClick={() => setLoginModal(true)}>
+            <a
+              href="/"
+              className="loginButton"
+              onClick={(e) => {
+                e.preventDefault();
+                setSignup(false);
+                setLoginModal(true);
+              }}
+            >
               Login
-            </span>
+            </a>
           }
           menus={[
             { label: 'My Profile', href: '', icon: null },
@@ -94,7 +105,15 @@ const Header = (props) => {
           firstMenu={
             <div className="firstmenu">
               <span>New Customer?</span>
-              <a href="/" style={{ color: '#2874f0' }}>
+              <a
+                href="/"
+                style={{ color: '#2874f0' }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setLoginModal(true);
+                  setSignup(true);
+                }}
+              >
                 Sign Up
               </a>
             </div>
@@ -110,10 +129,26 @@ const Header = (props) => {
         <div className="authContainer">
           <div className="row">
             <div className="leftspace">
-              <h2>Login</h2>
+              {signup ? <h2>Signup</h2> : <h2>Login</h2>}
               <p>Get access to your Orders, Wishlist and Recommendations</p>
             </div>
             <div className="rightspace">
+              {signup && (
+                <MaterialInput
+                  type="text"
+                  label="Enter First Name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              )}
+              {signup && (
+                <MaterialInput
+                  type="text"
+                  label="Enter Last Name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              )}
               <MaterialInput
                 type="text"
                 label="Enter Email/Enter Mobile Number"
